@@ -33,7 +33,13 @@ New-ADUser `
     -Path "OU=$Department,OU=Departments,DC=iamlab,DC=local"
 
   # Assign RBAC group
-$GroupName = "$Department`_Modify"
+switch ($Department) {
+    "Finance" { $GroupName = "FIN_Modify" }
+    "HR"      { $GroupName = "HR_Modify" }
+    "IT"      { $GroupName = "IT_Modify" }
+    "Sales"   { $GroupName = "SAL_Modify" }
+    "Executive" { $GroupName = "EXEC_Modify" }
+}
 
 Add-ADGroupMember -Identity $GroupName -Members $Username 
 
