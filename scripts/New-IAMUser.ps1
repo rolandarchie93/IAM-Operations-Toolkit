@@ -1,8 +1,6 @@
 # New-IAMUser.ps1
 # Automates provisioning of new users in Active Directory
 
-Start-Transcript -Path "C:\logs\IAM-Toolkit.log" -Append
-
 param(
     [Parameter(Mandatory=$true)]
     [string]$FirstName,
@@ -16,6 +14,8 @@ param(
     [Parameter(Mandatory=$true)]
     [SecureString]$Password
 )
+
+Start-Transcript -Path "C:\logs\IAM-Toolkit.log" -Append
 
 try {
 
