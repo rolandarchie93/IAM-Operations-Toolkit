@@ -52,19 +52,20 @@ try {
 
     Connect-MgGraph -Scopes "User.ReadWrite.All", "AuditLog.Read.All"
 
-    $userObject = Get-ADUser -Identity $SamAcountName - Properties UserPrincipalName
+    $userObject = Get-ADUser -Identity $SamAccountName -Properties UserPrincipalName
     $upn = $userObject.UserPrincipalName
 
     Write-Host "Executing session revocation for UPN: $upn"
 
-    Revoke-MgUserSignInSession -UserId $upn
+    Revoke-MgUserSignInSession -UserId $upn -ErrorAction Stop
 
-    Write-Host "SUCCESS: All cloud refresh tokens for $upn have been revoked." -ForegroundColor Green
+    Write-Host "SUCCESS: Cloud session revoked." -ForegroundColor Green
 }
 catch {
-    
-    Write-Host "Error: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "ERROR: Cloud session revocation failed." -ForegroundColor Red
 }
+
+Disconnect-MgGraph
 
 # --- End of Hybrid Termination Block ---
 
