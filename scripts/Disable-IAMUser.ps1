@@ -1,12 +1,14 @@
- # Disable-IAMUser.ps1
+# Disable-IAMUser.ps1
 # Automates secure offboarding of users in Active Directory
 
-Start-Transcript -Path "C:\logs\IAM-Toolkit.log" -Append
+
 
 param(
     [Parameter(Mandatory = $true)]
     [string]$SamAccountName
 )
+
+Start-Transcript -Path "C:\logs\IAM-Toolkit.log" -Append
 
 try {
 
@@ -41,7 +43,7 @@ Write-Host "- Description updated with termination date"
 
 
 
-# --- Start of Hybrid Termination Block ---
+    # --- Start of Hybrid Termination Block ---
 
 Write-Host "Proceeding with cloud session revocation for $SamAccountName..."
 
@@ -52,8 +54,7 @@ try {
 
     Connect-MgGraph -Scopes "User.ReadWrite.All", "AuditLog.Read.All"
 
-    $userObject = Get-ADUser -Identity $SamAccountName -Properties UserPrincipalName
-    $upn = $userObject.UserPrincipalName
+    $upn = "$SamAccountName@rolandarchie93gmail.onmicrosoft.com"
 
     Write-Host "Executing session revocation for UPN: $upn"
 
@@ -70,3 +71,11 @@ Disconnect-MgGraph
 # --- End of Hybrid Termination Block ---
 
 Stop-Transcript
+
+
+ 
+
+  
+
+
+ 
