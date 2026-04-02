@@ -61,3 +61,4 @@ Connect-MgGraph -Scopes "User.ReadWrite.All", "AuditLog.Read.All"
 $upn = "$SamAccountName@rolandarchie93gmail.onmicrosoft.com"
 
 Revoke-MgUserSignInSession -UserId $upn -ErrorAction Stop
+```
